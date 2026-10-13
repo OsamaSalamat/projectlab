@@ -108,7 +108,10 @@ code,pre{font-family:'JetBrains Mono',ui-monospace,monospace}
 .back-to-top{width:44px;height:44px;border-radius:12px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px -8px rgba(11,20,32,.4);opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s;border:1px solid rgba(255,255,255,.1)}
 .back-to-top.show{opacity:1;pointer-events:auto;transform:translateY(0)}
 .back-to-top:hover{background:var(--accent)}
-@media(max-width:640px){.back-to-top{width:40px;height:40px}}
+/* Hide back-to-top on mobile — WhatsApp button is enough */
+@media(max-width:640px){
+  .back-to-top{display:none!important}
+}
 .whatsapp-float{width:52px;height:52px;border-radius:50%;background:var(--wa);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px -8px rgba(37,211,102,.5);position:relative;transition:.2s}
 .whatsapp-float:hover{background:#1FB955;transform:scale(1.06)}
 .whatsapp-float::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--wa);opacity:.5;animation:wa-pulse 2.4s ease-out infinite}
@@ -206,9 +209,23 @@ nav.primary{display:none;align-items:center;gap:2px}
 
 /* HERO */
 .hero{position:relative;margin-top:calc(-1 * var(--header-h));padding-top:var(--header-h);background:var(--ink);overflow:hidden;min-height:640px}
-.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% center;z-index:0;pointer-events:none}
+.hero-bg{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:75% 50%;
+  z-index:0;pointer-events:none;
+  filter:saturate(1.05) contrast(1.02);
+}
 .hero-grain{position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.32;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,var(--ink) 0%,var(--ink) 48%,rgba(11,20,32,.86) 60%,rgba(11,20,32,.52) 76%,rgba(11,20,32,.2) 90%,rgba(11,20,32,.1) 100%)}
+.hero-overlay{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,
+    var(--ink) 0%,
+    var(--ink) 42%,
+    rgba(11,20,32,.92) 54%,
+    rgba(11,20,32,.7) 68%,
+    rgba(11,20,32,.35) 82%,
+    rgba(11,20,32,.12) 100%);
+}
 @media(max-width:1023px){.hero-bg{object-position:center}.hero-overlay{background:linear-gradient(180deg,rgba(11,20,32,.2) 0%,rgba(11,20,32,.55) 25%,rgba(11,20,32,.88) 55%,var(--ink) 82%,var(--ink) 100%)}}
 .hero-inner{position:relative;z-index:3;max-width:var(--max);margin:0 auto;padding:52px var(--gutter) 64px;min-height:640px;display:flex;align-items:center}
 @media(min-width:640px){.hero-inner{padding:64px var(--gutter) 72px}}
@@ -349,7 +366,17 @@ section{padding:64px 0}
 .project-meta .dot{width:3px;height:3px;background:var(--line-strong);border-radius:50%}
 .project-title{font-family:'Manrope',sans-serif;font-size:1.125rem;font-weight:700;letter-spacing:-.018em;line-height:1.3}
 .project-title a:hover{color:var(--accent)}
-.project-sum{font-size:.9375rem;line-height:1.68;color:var(--text-2);flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.project-sum{
+  font-size:.9375rem;
+  line-height:1.68;
+  color:var(--text-2);
+  flex:1;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:3;
+  line-clamp:3;
+  overflow:hidden;
+}
 .project-tags{display:flex;flex-wrap:wrap;gap:6px}
 .tag{display:inline-flex;padding:3px 9px;border:1px solid var(--line);background:var(--cream);border-radius:6px;font-size:.6875rem;font-weight:500;color:var(--slate);white-space:nowrap}
 .project-foot{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--line-2);font-size:.8125rem;font-weight:600;color:var(--accent)}
@@ -416,8 +443,24 @@ section{padding:64px 0}
 .article-cat{font-size:.6875rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
 .article-title{font-family:'Manrope',sans-serif;font-size:clamp(1.125rem,1.2vw + .6rem,1.3125rem);font-weight:700;line-height:1.28;transition:color .15s}
 .article-row:hover .article-title{color:var(--accent)}
-.article-excerpt{margin-top:10px;font-size:.9375rem;line-height:1.68;color:var(--text-2);max-width:660px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-@media(min-width:1024px){.article-excerpt{-webkit-line-clamp:unset}}
+.article-excerpt{
+  margin-top:10px;
+  font-size:.9375rem;
+  line-height:1.68;
+  color:var(--text-2);
+  max-width:660px;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:3;
+  line-clamp:3;
+  overflow:hidden;
+}
+@media(min-width:1024px){
+  .article-excerpt{
+    -webkit-line-clamp:unset;
+    line-clamp:unset;
+  }
+}
 .article-meta{margin-top:14px;font-size:.8125rem;color:var(--slate);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
 .article-meta .sep{width:3px;height:3px;background:var(--line-strong);border-radius:50%}
 
@@ -1120,10 +1163,16 @@ footer.site::before{content:'';position:absolute;inset:0;opacity:.22;pointer-eve
 }
 .related-card-title{
   font-family:'Manrope',sans-serif;
-  font-size:.9375rem;font-weight:700;
-  line-height:1.4;letter-spacing:-.008em;color:var(--text);
-  display:-webkit-box;-webkit-line-clamp:2;
-  -webkit-box-orient:vertical;overflow:hidden;
+  font-size:.9375rem;
+  font-weight:700;
+  line-height:1.4;
+  letter-spacing:-.008em;
+  color:var(--text);
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  line-clamp:2;
+  overflow:hidden;
 }
 
 /* Next step card — gradient + glow */
@@ -2926,7 +2975,17 @@ function setAdmin(v){try{if(v)localStorage.setItem(STORAGE.isAdmin,'true');else 
 /* ============================================================
    WHATSAPP
    ============================================================ */
-function waUrl(msg){const num=PL_CONFIG.whatsapp.replace(/\D/g,'');const text=msg||PL_CONFIG.whatsappGreeting;return'https://wa.me/'+num+'?text='+encodeURIComponent(text)}
+function waUrl(msg){
+  const num=PL_CONFIG.whatsapp.replace(/\D/g,'');
+  const text=encodeURIComponent(msg||PL_CONFIG.whatsappGreeting);
+  const isMobile=/Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop|Mobile/i.test(navigator.userAgent);
+  if(isMobile){
+    // Mobile: wa.me properly deep-links into the WhatsApp app
+    return 'https://wa.me/'+num+'?text='+text;
+  }
+  // Desktop: web.whatsapp.com goes straight to the chat (or QR login if not signed in)
+  return 'https://web.whatsapp.com/send?phone='+num+'&text='+text;
+}
 function waUrlForProject(title){return waUrl('Hi Osama, I am working on the "'+title+'" project from ProjectLab and I have a question.')}
 
 /* ============================================================
@@ -3244,7 +3303,7 @@ function viewHome(){
   return(
     /* HERO */
     '<section class="hero">'+
-      '<img class="hero-bg" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=2200&q=85&auto=format&fit=crop" alt="A developer\'s workspace with a laptop showing a code editor, a notebook with system diagrams, and a pen." fetchpriority="high" />'+
+      '<img class="hero-bg" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=2400&q=85&auto=format&fit=crop" alt="A dark code editor showing colourful syntax highlighting." fetchpriority="high" />'+
       '<div class="hero-overlay" aria-hidden="true"></div>'+
       '<div class="hero-grain" aria-hidden="true"></div>'+
       '<div class="hero-inner"><div class="hero-content">'+
@@ -4242,6 +4301,16 @@ document.addEventListener('keydown',(e)=>{
 window.addEventListener('hashchange',render);
 render();
 updateProgress();
+
+// Wire the floating WhatsApp button to the configured number
+(function(){
+  const waFloat = document.getElementById('wa-float');
+  if (waFloat) {
+    waFloat.setAttribute('href', waUrl());
+    const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    if (isMobile) waFloat.removeAttribute('target');
+  }
+})();
 </script>
 </body>
 </html>
